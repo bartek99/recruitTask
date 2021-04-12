@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.bartoszliszka.recruitTask.data.Student;
 import pl.bartoszliszka.recruitTask.data.Teacher;
 import pl.bartoszliszka.recruitTask.data.TeacherRepository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -86,7 +85,6 @@ public class JpaTeacherRepository implements TeacherRepository {
                 break;
             }
             case "Last name descending":{
-
                 query="from Teacher t order By t.lastName DESC, t.firstName DESC";
                 break;
             }
@@ -180,11 +178,19 @@ public class JpaTeacherRepository implements TeacherRepository {
                 for (int i = counter; i < nameTeacher.length(); i++) {
                     if (nameTeacher.charAt(i) == ' ') {
                         word2 = nameTeacher.substring(counter, i);
+                        counter=i;
                         break;
                     }
                 }
                 if(word2.equals("")){
                     word2=nameTeacher.substring(counter,nameTeacher.length());
+                }else{
+                    for (int i = counter; i <nameTeacher.length() ; i++) {
+                        if (nameTeacher.charAt(i) != ' ') {
+                            List<Teacher> teachers=new LinkedList<>();
+                            return teachers;
+                        }
+                    }
                 }
             }
         }
@@ -193,7 +199,6 @@ public class JpaTeacherRepository implements TeacherRepository {
         if(!word1.equals("")){
             word12=word1+"%";
         }
-
         if(!word2.equals("")){
             word22=word2+"%";
         }
@@ -220,7 +225,6 @@ public class JpaTeacherRepository implements TeacherRepository {
         String query="from Teacher t";
         List<Teacher> teachers=em.createQuery(query,Teacher.class).getResultList();
         List<Teacher> teachers1=new LinkedList<>();
-
         if(!student.isEmpty()){
             for (int i = 0; i < teachers.size(); i++) {
                 boolean isStudent=false;

@@ -1,12 +1,10 @@
 package pl.bartoszliszka.recruitTask.db;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 import pl.bartoszliszka.recruitTask.data.Student;
 import pl.bartoszliszka.recruitTask.data.StudentRepository;
 import pl.bartoszliszka.recruitTask.data.Teacher;
-
 import java.util.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +22,6 @@ public class JpaStudentRepository implements StudentRepository {
     public Optional<Student> addStudent(String firstName, String lastName, int age, String email, String subject) {
         Student student=new Student(firstName,lastName,age,email,subject);
         try {
-            System.out.println(student);
             em.persist(student);
             return Optional.of(student);
         } catch (Exception e) {
@@ -34,7 +31,6 @@ public class JpaStudentRepository implements StudentRepository {
 
     @Override
     public Optional<Student> getStudentsByEmail(String email) {
-
         String query="from Student s where s.email=:email ";
         try {
             return Optional
@@ -46,7 +42,6 @@ public class JpaStudentRepository implements StudentRepository {
 
     @Override
     public Optional<Teacher> getTeachersByEmail(String email) {
-
         String query="from Teacher t where t.email=:email ";
         try {
             return Optional
@@ -87,18 +82,6 @@ public class JpaStudentRepository implements StudentRepository {
         return em.createQuery(query,Student.class).getResultList();
     }
 
-    @Override
-    public List<Student> getStudentsByPage(int pageNumber) {
-        String query="from Student s";
-        List<Student> students= em.createQuery(query,Student.class).getResultList();
-        int indexFrom=(pageNumber-1)*10;
-        int indexTo=indexFrom+10;
-        if(indexTo>students.size()){
-            return students.subList(indexFrom,students.size());
-        }
-        return students.subList(indexFrom,indexTo);
-    }
-
     @Transactional
     @Override
     public Optional<Boolean> deleteStudentById(int studentId) {
@@ -129,7 +112,6 @@ public class JpaStudentRepository implements StudentRepository {
                 break;
             }
             case "Last name descending":{
-
                 query="from Student s order By s.lastName DESC, s.firstName DESC";
                 break;
             }
@@ -183,8 +165,6 @@ public class JpaStudentRepository implements StudentRepository {
     public List<Student> getStudentsByName(String nameStudent) {
         String word1="";
         String word2="";
-//        System.out.println("word1 " + word1);
-//        System.out.println("word2 " + word2);
         int counter=0;
         int counter2=0;
         for(int i=0;i<nameStudent.length();i++){
@@ -213,45 +193,39 @@ public class JpaStudentRepository implements StudentRepository {
                 for (int i = counter; i < nameStudent.length(); i++) {
                     if (nameStudent.charAt(i) == ' ') {
                         word2 = nameStudent.substring(counter, i);
+                        counter=i;
                         break;
                     }
                 }
                 if(word2.equals("")){
                     word2=nameStudent.substring(counter,nameStudent.length());
+                }else{
+                    for (int i = counter; i <nameStudent.length() ; i++) {
+                        if (nameStudent.charAt(i) != ' ') {
+                            List<Student> students=new LinkedList<>();
+                            return students;
+                        }
+                    }
                 }
             }
-//            else{
-//                word2=null;
-//            }
-
         }
         String word12="";
         String word22="";
         if(!word1.equals("")){
             word12=word1+"%";
         }
-
         if(!word2.equals("")){
             word22=word2+"%";
         }
         System.out.println(word1);
         System.out.println(word2);
-//        System.out.println(word1);
-//        System.out.println(word2);
-
-//        String query="from Student s";
-//        return em.createQuery(query,Student.class).getResultList();
         String query=null;
         if(word2.equals("")){
-//            query+="from Student s where s.firstName=:word1 or s.lastName=:word1";
-            query="from Student s where s.firstName like :word12 or s.lastName like :word12";
-//            System.out.println(query);
+        query="from Student s where s.firstName like :word12 or s.lastName like :word12";
         }else{
             query="from Student s where (s.firstName=:word1 and s.lastName like :word22) or (s.lastName=:word1 and s.firstName like :word22)";
         }
-//        System.out.println(query);
         List<Student> s=new LinkedList<>();
-//        return s;
         if(word1.equals("")){
           return s;
         }
@@ -305,6 +279,5 @@ public class JpaStudentRepository implements StudentRepository {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
-
     }
 }

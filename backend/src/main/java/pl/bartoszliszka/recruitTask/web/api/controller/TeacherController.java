@@ -2,13 +2,10 @@ package pl.bartoszliszka.recruitTask.web.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.bartoszliszka.recruitTask.data.Student;
 import pl.bartoszliszka.recruitTask.data.StudentRepository;
 import pl.bartoszliszka.recruitTask.data.Teacher;
 import pl.bartoszliszka.recruitTask.data.TeacherRepository;
-import pl.bartoszliszka.recruitTask.request.AddStudentRequest;
 import pl.bartoszliszka.recruitTask.request.AddTeacherRequest;
-import pl.bartoszliszka.recruitTask.request.UpdateStudentRequest;
 import pl.bartoszliszka.recruitTask.request.UpdateTeacherRequest;
 import pl.bartoszliszka.recruitTask.web.SuccessResponse;
 import pl.bartoszliszka.recruitTask.web.api.response.StudentResponse;
@@ -52,8 +49,6 @@ public class TeacherController {
         }
 
     }
-
-
 
     @CrossOrigin
     @GetMapping("/searchTeacher")

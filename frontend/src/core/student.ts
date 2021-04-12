@@ -1,5 +1,4 @@
 import {requestDelete, requestGet, requestPost, requestPut} from "./common";
-import {mapTeacher, Teacher} from "./teacher";
 
 export function addStudentToTeacher(studentId: number, teacherId: number) {
     return requestPost(`/students/addStudentToTeacher`, {studentId, teacherId }, (result) => true, (error) => false);
@@ -15,9 +14,6 @@ export interface Student {
     subject: string;
 
 }
-
-
-
 
 export interface NewStudent {
     firstName: string;
@@ -74,10 +70,6 @@ export function getStudentsByPage(pageNumber: number, sort:unknown): Promise<Stu
     return requestGet(`/students/page/${pageNumber}/sort/${sort}`, (results) => results.map(mapStudent), (error) => []);
 }
 
-export function getSortedStudents(sort: unknown): Promise<Student[]> {
-    return requestGet(`/students/${sort}`, (results) => results.map(mapStudent), (error) => []);
-}
-
 export function getStudent(studentId: number): Promise<Student | null> {
     return requestGet(`/students/studentId/${studentId}`, (result) => mapStudent(result), (error) => null);
 }
@@ -106,8 +98,6 @@ export function deleteStudentTeacherConnection(teacherId:number, studentId: numb
 export function deleteStudent(studentId: number): Promise<boolean> {
     return requestDelete(`/students/${studentId}`, (result) => true, (error) => false);
 }
-
-
 
 export function mapStudent(data: any): Student {
     return ({

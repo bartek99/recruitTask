@@ -80,13 +80,13 @@ public class StudentController {
         final var student=studentRepository.getStudentById(request.studentId());
         final var teacher = teacherRepository.getTeacherById(request.teacherId());
         if (student.isEmpty() || teacher.isEmpty()) {
-            throw new RestException("Unable to add a employee to group.");
+            throw new RestException("Unable to add a teacher to student.");
         } else {
             final var added = studentRepository.addStudent(student.get(), teacher.get());
             if (added) {
                 return new SuccessResponse<>(null);
             } else {
-                throw new RestException("Unable to add a employee to group.");
+                throw new RestException("Unable to add a teacher to student.");
             }
         }
     }
@@ -135,24 +135,6 @@ public class StudentController {
                 .deleteStudentById(studentId)
                 .map(deleted -> new SuccessResponse<Void>(null))
                 .orElseThrow(() -> new RestException(("Unable to delete a student")));
-    }
-
-    @CrossOrigin
-    @GetMapping("/{sort}")
-    public SuccessResponse<List<StudentResponse>> getSortedStudents(
-            @PathVariable("sort") String sort) {
-        List<Student> students=studentRepository.getSortedStudent(sort);
-        if(students.size()<10){
-            students=students.subList(0,students.size());
-        }else{
-            students=students.subList(0,10);
-        }
-        final var sortedStudents=students
-                .stream()
-                .map(StudentResponse::fromStudent)
-                .collect(Collectors.toList());
-
-        return new SuccessResponse<>(sortedStudents);
     }
 
     @CrossOrigin

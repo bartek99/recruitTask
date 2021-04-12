@@ -1,5 +1,4 @@
 import {requestDelete, requestGet, requestPost, requestPut} from "./common";
-import {mapStudent, Student} from "./student";
 
 export interface Teacher {
     teacherId: number;
@@ -45,8 +44,6 @@ export function studentExists(email: string): Promise<boolean> {
         (error) => false);
 }
 
-
-
 export function teacherExists(email: string, notTeacherId?: number): Promise<boolean> {
     let queryString = `email=${email}`
     if (notTeacherId !== undefined) {
@@ -85,20 +82,13 @@ export function updateTeacher(teacherId: number, teacher: EditedTeacher): Promis
     return requestPut(`/teachers/updateTeacher/${teacherId}`, teacher, (result) => true, (error) => false);
 }
 
-// export function deleteStudentTeacherConnection(studentId:number, teacherId: number): Promise<Teacher | null> {
-//     return requestPut(`/teachers/deleteStudent/${studentId}/Teacher/${teacherId}/Connection`, null, (result) => mapTeacher(result), (error) => null);
-// }
-
 export function deleteStudentTeacherConnection(studentId:number, teacherId: number): Promise<boolean> {
     return requestDelete(`/teachers/deleteStudent/${studentId}/Teacher/${teacherId}/Connection`, (result) => true, (error) => false);
 }
 
-
 export function deleteTeacher(teacherId: number): Promise<boolean> {
     return requestDelete(`/teachers/${teacherId}`, (result) => true, (error) => false);
 }
-
-
 
 export function mapTeacher(data: any): Teacher {
     return ({

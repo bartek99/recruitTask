@@ -7,10 +7,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { ExitToApp, Person, VpnKey } from '@material-ui/icons';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -21,7 +19,6 @@ import { useStyles } from './styles';
 import { ThemeContext } from './theme-context';
 interface DashboardProps {
   title: string;
-  // menuItems: any;
   children: React.ReactNode;
 }
 
@@ -111,31 +108,7 @@ export default function Dashboard(props: DashboardProps) {
             </ListItemIcon>
             <ListItemText primary={"Wyszukiwarka"}  />
           </ListItem>
-          {/*{props.menuItems}*/}
         </List>
-        {/*<List>*/}
-        {/*  <div>*/}
-        {/*    <ListSubheader inset>Użytkownik</ListSubheader>*/}
-        {/*    <ListItem button component={RouterLink} to={'/' + props.routePrefix + '/me'}>*/}
-        {/*      <ListItemIcon>*/}
-        {/*        <Person />*/}
-        {/*      </ListItemIcon>*/}
-        {/*      <ListItemText primary="Moje dane" />*/}
-        {/*    </ListItem>*/}
-        {/*    <ListItem button component={RouterLink} to={'/' + props.routePrefix + '/change-password'}>*/}
-        {/*      <ListItemIcon>*/}
-        {/*        <VpnKey />*/}
-        {/*      </ListItemIcon>*/}
-        {/*      <ListItemText primary="Zmiana hasła" />*/}
-        {/*    </ListItem>*/}
-        {/*    <ListItem button component={RouterLink} to="/logout">*/}
-        {/*      <ListItemIcon>*/}
-        {/*        <ExitToApp />*/}
-        {/*      </ListItemIcon>*/}
-        {/*      <ListItemText primary="Wyloguj się" />*/}
-        {/*    </ListItem>*/}
-        {/*  </div>*/}
-        {/*</List>*/}
         <Divider />
       </Drawer>
       <main className={classes.content}>
