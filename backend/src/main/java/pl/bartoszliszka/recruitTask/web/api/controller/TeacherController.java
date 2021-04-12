@@ -107,7 +107,7 @@ public class TeacherController {
         return teacherRepository
                 .updateTeacherById(teacherId, request.firstName(), request.lastName(), request.age(), request.email(), request.course())
                 .map(updated -> new SuccessResponse<Void>(null))
-                .orElseThrow(() -> new RestException("Unable to update an student."));
+                .orElseThrow(() -> new RestException("Unable to update an teacher."));
     }
 
     @CrossOrigin
